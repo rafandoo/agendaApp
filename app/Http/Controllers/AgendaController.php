@@ -13,7 +13,8 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        return "index";
+        session_start();
+        return view('agenda.index', ['agenda' => $_SESSION['agenda']]);
     }
 
     /**
@@ -42,7 +43,6 @@ class AgendaController extends Controller
             'telefone' => $request->input('telefone'),
         );
         $_SESSION['agenda'][] = $novo;
-        var_dump($_SESSION['agenda']);
     }
 
     /**
@@ -51,10 +51,13 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         session_start();
-        var_dump($_SESSION['agenda'][]);
+        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
+            return ($array['id'] == $id); 
+        });
+        return view('agenda.show', ['agenda' => $agendaId]);
     }
 
     /**
