@@ -68,7 +68,11 @@ class AgendaController extends Controller
      */
     public function edit($id)
     {
-        return "edit";
+        session_start();
+        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
+            return ($array['id'] == $id); 
+        });
+        return view('agenda.edit', ['agenda' => $agendaId]);
     }
 
     /**
@@ -80,7 +84,15 @@ class AgendaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return "update";
+        session_start();
+        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
+            return ($array['id'] == $id); 
+        });
+        $agendaId = array_values($agendaId);
+        $agendaId[0]['nome'] = $request->input('nome');
+        $agendaId[0]['email'] = $request->input('email');
+        $agendaId[0]['telefone'] = $request->input('telefone');
+        $_SESSION['agenda'][$agendaId[0]['id']] = $agendaId[0];
     }
 
     /**
