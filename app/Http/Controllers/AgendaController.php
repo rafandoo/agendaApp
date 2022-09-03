@@ -16,6 +16,11 @@ class AgendaController extends Controller
         session_start();
         if (isset($_SESSION['agenda'])) {
             $agenda = $_SESSION['agenda'];
+            $keys = array();
+            foreach ($agenda as $key => $value) {
+                $keys[$key] = $value['id'];
+            }
+            array_multisort($keys, SORT_ASC, $agenda);
         } else {
             $agenda = array();
         }
@@ -78,7 +83,6 @@ class AgendaController extends Controller
         $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
             return ($array['id'] == $id); 
         });
-
         return view('agenda.edit', ['agenda' => array_values($agendaId)]);
     }
 
@@ -92,11 +96,21 @@ class AgendaController extends Controller
     public function update(Request $request, $id)
     {
         session_start();
-        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
+        $agenda = $_SESSION['agenda'];
+        $agendaId = array_filter($agenda, function($array) use ($id) { 
             return ($array['id'] == $id); 
         });
         $agendaId = array_values($agendaId);
-        var_dump($agendaId);
+        $agendaId[0]['nome'] = $request->input('nome');
+        $agendaId[0]['email'] = $request->input('email');
+        $agendaId[0]['telefone'] = $request->input('telefone');
+        $agenda = array_filter($agenda, function($array) use ($id) { 
+            return ($array['id'] != $id); 
+        });
+        $agenda[] = $agendaId[0];
+        $_SESSION['agenda'] = $agenda;
+        return redirect()->route('agenda.index');
+
     }
 
     /**
