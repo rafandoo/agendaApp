@@ -14,7 +14,12 @@ class AgendaController extends Controller
     public function index()
     {
         session_start();
-        return view('agenda.index', ['agenda' => $_SESSION['agenda']]);
+        if (isset($_SESSION['agenda'])) {
+            $agenda = $_SESSION['agenda'];
+        } else {
+            $agenda = array();
+        }
+        return view('agenda.index', ['agenda' => $agenda]);
     }
 
     /**
@@ -43,6 +48,7 @@ class AgendaController extends Controller
             'telefone' => $request->input('telefone'),
         );
         $_SESSION['agenda'][] = $novo;
+        return redirect()->route('agenda.index');
     }
 
     /**
@@ -72,7 +78,8 @@ class AgendaController extends Controller
         $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
             return ($array['id'] == $id); 
         });
-        return view('agenda.edit', ['agenda' => $agendaId]);
+
+        return view('agenda.edit', ['agendaId' => $agendaId]);
     }
 
     /**

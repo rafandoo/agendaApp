@@ -7,30 +7,36 @@
     <title>Agenda - Index</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Email</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($agenda as $valor)
+    <fieldset>
+        <legend>Agenda</legend>
+        <a href="{{ route('agenda.create') }}">Novo Contato</a>
+        <br><br>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $valor['id'] }}</td>
-                    <td>{{ $valor['nome'] }}</td>
-                    <td>{{ $valor['telefone'] }}</td>
-                    <td>{{ $valor['email'] }}</td>
-                    <td>
-                        <a href="{{ route('agenda.edit', $valor['id']) }}">Editar</a>
-                        <a href="{{ route('agenda.destroy', $valor['id']) }}">Excluir</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Ações</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($agenda as $item)
+                    <tr>
+                        <td>{{ $item['id'] }}</td>
+                        <td>{{ $item['nome'] }}</td>
+                        <td>{{ $item['telefone'] }}</td>
+                        <td>{{ $item['email'] }}</td>
+                        <td>
+                            <a href="{{ route('agenda.show', $item['id']) }}">Ver</a>
+                            <a href="{{ route('agenda.edit', $item['id']) }}">Editar</a>
+                            <a href="{{ route('agenda.destroy', $item['id']) }}">Excluir</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </fieldset>
 </body>
 </html>
