@@ -5,6 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda - Index</title>
+    <script type="text/javascript">
+        function confirmDelete(id) {
+            if (confirm("Deseja realmente excluir?")) {
+                fetch('agenda/' + id, {
+                    method: 'DELETE'
+                }).then(location.reload())
+            }
+        }
+    </script>
 </head>
 <body>
     <fieldset>
@@ -31,7 +40,7 @@
                         <td>
                             <a href="{{ route('agenda.show', $item['id']) }}">Ver</a>
                             <a href="{{ route('agenda.edit', $item['id']) }}">Editar</a>
-                            <a href="{{ route('agenda.destroy', $item['id']) }}">Excluir</a>
+                            <a href="javascript:confirmDelete({{ $item['id'] }})">Excluir</a>
                         </td>
                     </tr>
                 @endforeach

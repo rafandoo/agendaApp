@@ -121,6 +121,12 @@ class AgendaController extends Controller
      */
     public function destroy($id)
     {
-        return "destroy";
-    }
+        session_start();
+        $agenda = $_SESSION['agenda'];
+        $agenda = array_filter($agenda, function($array) use ($id) { 
+            return ($array['id'] != $id); 
+        });
+        $_SESSION['agenda'] = $agenda;
+        return redirect()->route('agenda.index');
+    }   
 }
