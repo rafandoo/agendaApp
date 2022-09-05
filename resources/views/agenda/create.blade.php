@@ -14,13 +14,13 @@
             <input type="text" hidden value="0">
             <br><br>
             <label for="nome">Nome: </label>
-            <input type="text" id="nome" name="nome">
+            <input type="text" id="nome" name="nome" required>
             <br><br>
             <label for="telefone">Telefone: </label>
-            <input type="tel" id="telefone" name="telefone">
+            <input type="tel" id="telefone" name="telefone" required>
             <br><br>
             <label for="email">Email: </label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" required>
             <br><br>
             <input type="submit" value="Cadastrar">
     </fieldset>

@@ -20,7 +20,7 @@
         <label for="email">Email: </label>
         <input type="email" disabled value="{{ $agenda[0]['email'] }}">
         <br><br>
-        <a href="{{ route('agenda.index') }}">Voltar</a>
+        <a href="/agenda">Voltar</a>
     </fieldset>
 </body>
 </html>

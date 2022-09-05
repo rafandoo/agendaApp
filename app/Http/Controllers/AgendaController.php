@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Agenda;
+
 class AgendaController extends Controller
 {
     /**
@@ -121,12 +123,13 @@ class AgendaController extends Controller
      */
     public function destroy($id)
     {
+        
         session_start();
         $agenda = $_SESSION['agenda'];
-        $agenda = array_filter($agenda, function($array) use ($id) { 
-            return ($array['id'] != $id); 
-        });
-        $_SESSION['agenda'] = $agenda;
-        return redirect()->route('agenda.index');
+        Agenda::destroy($id);
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+        return redirect()->route('agenda.index')->with('msg', "Contato excluído");
     }   
 }

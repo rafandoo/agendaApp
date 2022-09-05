@@ -40,7 +40,12 @@
                         <td>
                             <a href="{{ route('agenda.show', $item['id']) }}">Ver</a>
                             <a href="{{ route('agenda.edit', $item['id']) }}">Editar</a>
-                            <a href="javascript:confirmDelete({{ $item['id'] }})">Excluir</a>
+                            <form action="/agenda/{id}"
+                                method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Deletar</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
