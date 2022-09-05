@@ -40,7 +40,7 @@
                         <td>
                             <a href="{{ route('agenda.show', $item['id']) }}">Ver</a>
                             <a href="{{ route('agenda.edit', $item['id']) }}">Editar</a>
-                            <form action="/agenda/{id}"
+                            <form action="/agenda/{{ $item['id'] }}"
                                 method="POST">
                                 @csrf
                                 @method('DELETE')

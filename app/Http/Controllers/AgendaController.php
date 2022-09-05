@@ -124,12 +124,17 @@ class AgendaController extends Controller
     public function destroy($id)
     {
         
-        session_start();
-        $agenda = $_SESSION['agenda'];
-        Agenda::destroy($id);
-        if (request()->wantsJson()) {
-            return response([], 204);
+        if(!isset($_SESSION))
+        {
+            session_start();
+            $keys = array_keys($_SESSION['agenda']);
+            foreach ($keys as $key) {
+                if ($_SESSION['agenda'][$key]['id'] == $id) {
+                    unset($_SESSION['agenda'][$key]);
+                    break;
+                }
+            }
         }
-        return redirect()->route('agenda.index')->with('msg', "Contato excluído");
+        return redirect()->route('agenda.index');
     }   
 }
