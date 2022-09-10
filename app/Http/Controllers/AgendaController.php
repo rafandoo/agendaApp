@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Agenda;
-
 class AgendaController extends Controller
 {
     /**
@@ -123,18 +121,12 @@ class AgendaController extends Controller
      */
     public function destroy($id)
     {
-        
-        if(!isset($_SESSION))
-        {
-            session_start();
-            $keys = array_keys($_SESSION['agenda']);
-            foreach ($keys as $key) {
-                if ($_SESSION['agenda'][$key]['id'] == $id) {
-                    unset($_SESSION['agenda'][$key]);
-                    break;
-                }
-            }
-        }
+        session_start();
+        $agenda = $_SESSION['agenda'];
+        $agenda = array_filter($agenda, function($array) use ($id) { 
+            return ($array['id'] != $id); 
+        });
+        $_SESSION['agenda'] = $agenda;
         return redirect()->route('agenda.index');
     }   
 }

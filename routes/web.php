@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-use App\Http\Controllers\AgendaController;
 
 Route::resource('/agenda', AgendaController::class);
