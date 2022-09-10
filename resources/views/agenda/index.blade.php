@@ -2,8 +2,6 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda - Index</title>
     <script type="text/javascript">
         function confirmDelete(id) {
@@ -18,7 +16,7 @@
 <body>
     <fieldset>
         <legend>Agenda</legend>
-        <a href="{{ route('agenda.create') }}">Novo Contato</a>
+        <a href="{{ route('agenda.create') }}"><button>Novo Contato</button></a>
         <br><br>
         <table>
             <thead>
@@ -38,9 +36,9 @@
                         <td>{{ $item['telefone'] }}</td>
                         <td>{{ $item['email'] }}</td>
                         <td>
-                            <a href="{{ route('agenda.show', $item['id']) }}">Ver</a>
-                            <a href="{{ route('agenda.edit', $item['id']) }}">Editar</a>
-                            <a href="javascript:confirmDelete({{ $item['id'] }})">Excluir</a>
+                            <a href="{{ route('agenda.show', $item['id']) }}"><button>Ver</button></a>
+                            <a href="{{ route('agenda.edit', $item['id']) }}"><button>Editar</button></a>
+                            <a href="javascript:confirmDelete({{ $item['id'] }})"><button>Excluir</button></a>
                         </td>
                     </tr>
                 @endforeach

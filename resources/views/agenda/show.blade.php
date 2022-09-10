@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Agenda - Show</title>
-</head>
-<body>
+@extends('agenda.layout')
+
+@section('titulo', 'Agenda - Show')
+
+@section('conteudo')
     <fieldset>
         <label for="id" >ID: </label>
         <input type="text" disabled value="{{ $agenda[0]['id'] }}">
@@ -20,7 +16,7 @@
         <label for="email">Email: </label>
         <input type="email" disabled value="{{ $agenda[0]['email'] }}">
         <br><br>
-        <a href="{{ route('agenda.index') }}">Voltar</a>
+        <a href="{{ route('agenda.index') }}"><button>Voltar</button></a>
+        <a href="{{ route('agenda.edit', $agenda[0]['id']) }}"><button>Editar</button></a>
     </fieldset>
-</body>
-</html>
+@endsection
