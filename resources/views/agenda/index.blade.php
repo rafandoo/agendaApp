@@ -1,49 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Agenda - Index</title>
-    <script type="text/javascript">
-        function confirmDelete(id) {
-            if (confirm("Deseja realmente excluir?")) {
-                fetch('agenda/' + id, {
-                    method: 'DELETE'
-                }).then(location.reload())
-            }
-        }
-    </script>
-</head>
-<body>
-    <fieldset>
-        <legend>Agenda</legend>
-        <a href="{{ route('agenda.create') }}"><button>Novo Contato</button></a>
-        <br><br>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Email</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($agenda as $item)
-                    <tr>
-                        <td>{{ $item['id'] }}</td>
-                        <td>{{ $item['nome'] }}</td>
-                        <td>{{ $item['telefone'] }}</td>
-                        <td>{{ $item['email'] }}</td>
-                        <td>
-                            <a href="{{ route('agenda.show', $item['id']) }}"><button>Ver</button></a>
-                            <a href="{{ route('agenda.edit', $item['id']) }}"><button>Editar</button></a>
-                            <a href="javascript:confirmDelete({{ $item['id'] }})"><button>Excluir</button></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </fieldset>
-</body>
-</html>
+@extends('agenda.nav')
+@section('title', 'Agenda index')
+@section('content')
+
+<div id="search-container" class="col-md-12">
+    <h1>Busque um contato</h1>
+    <form action="">
+        <input type="text" id="search" name="search" class="form-control" placeholder="Procurar contato">
+    <form>
+</div>
+<div id="agenda-container" class="col md-12">
+    <h2>Lista de Contatos</h2>
+    <p>Confira nossos contatos</p>
+    <div id="cards-container" class="row">
+        @foreach($agenda as $agenda)
+        <div class="list-group">
+            <div class="list-group-item">
+                {{ $agenda->id }}
+                {{ $agenda->nome }}
+                {{ $agenda->telefone }}
+                {{ $agenda->email }}
+            </div><br>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+@endsection

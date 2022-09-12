@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Agenda;
+
 class AgendaController extends Controller
 {
     /**
@@ -14,16 +16,10 @@ class AgendaController extends Controller
     public function index()
     {
         session_start();
-        if (isset($_SESSION['agenda'])) {
-            $agenda = $_SESSION['agenda'];
-            $keys = array();
-            foreach ($agenda as $key => $value) {
-                $keys[$key] = $value['id'];
-            }
-            array_multisort($keys, SORT_ASC, $agenda);
-        } else {
-            $agenda = array();
-        }
+
+        $agenda = Agenda::all();
+
+
         return view('agenda.index', ['agenda' => $agenda]);
     }
 
@@ -45,14 +41,15 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        session_start();
-        $novo = array(
-            'id' => date('YmdHis'),
-            'nome' => $request->input('nome'),
-            'email' => $request->input('email'),
-            'telefone' => $request->input('telefone'),
-        );
-        $_SESSION['agenda'][] = $novo;
+        $agenda = new Agenda;
+
+        $agenda->id = $request->id;
+        $agenda->nome = $request->nome;
+        $agenda->telefone = $request->telefone;
+        $agenda->email = $request->email;
+        
+        $agenda->save();
+
         return redirect()->route('agenda.index');
     }
 
