@@ -18,15 +18,14 @@ class AgendaController extends Controller
         $search = request('search');
 
         if($search){
-            $agenda = Agenda::where([
+            $contato = Contato::where([
                 ['nome', 'like', '%'.$search.'%']
             ])->get();
         }else {
-            
-            $agenda = Agenda::all();
+            $contato = Contato::all();
         }
 
-        return view('agenda.index', ['agenda' => $agenda, 'search' => $search]);
+        return view('contato.index', ['contato' => $contato]);
     }
 
     /**
@@ -120,9 +119,9 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agenda $agenda)
+    public function destroy($id)
     {
         Agenda::findOrFail($id)->delete();
-        return redirect('/')->with('msg', 'Contato excluído com sucesso!');
+        return redirect()->route('agenda.index');
     }   
 }
