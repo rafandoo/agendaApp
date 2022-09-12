@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Agenda;
+
 class AgendaController extends Controller
 {
     /**
@@ -13,18 +15,17 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        session_start();
-        if (isset($_SESSION['agenda'])) {
-            $agenda = $_SESSION['agenda'];
-            $keys = array();
-            foreach ($agenda as $key => $value) {
-                $keys[$key] = $value['id'];
-            }
-            array_multisort($keys, SORT_ASC, $agenda);
-        } else {
-            $agenda = array();
+        $search = request('search');
+
+        if($search){
+            $contato = Contato::where([
+                ['nome', 'like', '%'.$search.'%']
+            ])->get();
+        }else {
+            $contato = Contato::all();
         }
-        return view('agenda.index', ['agenda' => $agenda]);
+
+        return view('contato.index', ['contato' => $contato]);
     }
 
     /**
@@ -45,14 +46,15 @@ class AgendaController extends Controller
      */
     public function store(Request $request)
     {
-        session_start();
-        $novo = array(
-            'id' => date('YmdHis'),
-            'nome' => $request->input('nome'),
-            'email' => $request->input('email'),
-            'telefone' => $request->input('telefone'),
-        );
-        $_SESSION['agenda'][] = $novo;
+        $agenda = new Agenda;
+
+        $agenda->id = $request->id;
+        $agenda->nome = $request->nome;
+        $agenda->telefone = $request->telefone;
+        $agenda->email = $request->email;
+        
+        $agenda->save();
+
         return redirect()->route('agenda.index');
     }
 
@@ -64,11 +66,9 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        session_start();
-        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
-            return ($array['id'] == $id); 
-        });
-        return view('agenda.show', ['agenda' => array_values($agendaId)]);
+        $agenda = Agenda::findOrFail($id);
+
+        return view('agenda.show', ['agenda' => $agenda]);
     }
 
     /**
@@ -121,12 +121,7 @@ class AgendaController extends Controller
      */
     public function destroy($id)
     {
-        session_start();
-        $agenda = $_SESSION['agenda'];
-        $agenda = array_filter($agenda, function($array) use ($id) { 
-            return ($array['id'] != $id); 
-        });
-        $_SESSION['agenda'] = $agenda;
+        Agenda::findOrFail($id)->delete();
         return redirect()->route('agenda.index');
     }   
 }

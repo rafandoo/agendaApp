@@ -28,10 +28,10 @@
                 <a href="#" class="nav-link">Contatos</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('agenda.create') }}" class="nav-link">Criar Contatos</a>
+                <a href="{{ route('contato.create') }}" class="nav-link">Criar Contatos</a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('agenda.index') }}" class="nav-link">Listar Contatos</a>
+                <a href="{{ route('contato.index') }}" class="nav-link">Listar Contatos</a>
               </li>
               <li class="nav-item">
                 <a href="/" class="nav-link">Entrar</a>
