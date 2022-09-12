@@ -21,7 +21,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="collapse navbar-collapse" id="navbar">
             <a href="#" class="navbar-brand">
-              <i class="bi bi-person-rolodex"></i>
+              <ion-icon name="mail-outline"></ion-icon>
             </a>
             <ul class="navbar-nav">
               <li class="nav-item">

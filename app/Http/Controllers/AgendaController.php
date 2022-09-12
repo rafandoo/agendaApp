@@ -15,12 +15,18 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        session_start();
+        $search = request('search');
 
-        $agenda = Agenda::all();
+        if($search){
+            $agenda = Agenda::where([
+                ['nome', 'like', '%'.$search.'%']
+            ])->get();
+        }else {
+            
+            $agenda = Agenda::all();
+        }
 
-
-        return view('agenda.index', ['agenda' => $agenda]);
+        return view('agenda.index', ['agenda' => $agenda, 'search' => $search]);
     }
 
     /**
@@ -61,11 +67,9 @@ class AgendaController extends Controller
      */
     public function show($id)
     {
-        session_start();
-        $agendaId = array_filter($_SESSION['agenda'], function($array) use ($id) { 
-            return ($array['id'] == $id); 
-        });
-        return view('agenda.show', ['agenda' => array_values($agendaId)]);
+        $agenda = Agenda::findOrFail($id);
+
+        return view('agenda.show', ['agenda' => $agenda]);
     }
 
     /**
@@ -116,14 +120,9 @@ class AgendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Agenda $agenda)
     {
-        session_start();
-        $agenda = $_SESSION['agenda'];
-        $agenda = array_filter($agenda, function($array) use ($id) { 
-            return ($array['id'] != $id); 
-        });
-        $_SESSION['agenda'] = $agenda;
-        return redirect()->route('agenda.index');
+        Agenda::findOrFail($id)->delete();
+        return redirect('/')->with('msg', 'Contato excluído com sucesso!');
     }   
 }
