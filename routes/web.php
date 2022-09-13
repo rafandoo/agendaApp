@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AgendaController;
-use App\Http\Controllers\ContatoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +19,3 @@ Route::get('/', function () {
 });
 
 Route::resource('/agenda', AgendaController::class);
-Route::resource('/contato', ContatoController::class);

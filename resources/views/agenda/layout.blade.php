@@ -8,7 +8,7 @@
     @component('agenda.nav')
     @endcomponent    
 
-    @yield('content')
+    @yield('conteudo')
 
     @yield('form')
     

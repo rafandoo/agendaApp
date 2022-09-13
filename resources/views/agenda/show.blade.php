@@ -1,22 +1,22 @@
-@extends('agenda.nav')
+@extends('agenda.layout')
 
-@section('titulo', $agenda->nome)
+@section('titulo', 'Agenda - Show')
 
-@section('content')
-
-    <div class="col-md-0 offset-md-1">
-        <div class="row">
-            <div id="info-container" class="col-md-5">
-                <label for="id"><ion-icon name="grid-outline"></ion-icon>ID: </label> {{ $agenda->id }} <br>
-                <label for="nome"><ion-icon name="people-outline"></ion-icon>Nome: </label> {{ $agenda->nome }} <br>
-                <label for="telefone"><ion-icon name="call-outline"></ion-icon>Telefone: </label> {{ $agenda->telefone }} <br>
-                <label for="email"><ion-icon name="mail-outline"></ion-icon>E-mail: </label> {{ $agenda->email }} <br>
-                <br><br>
-                <a href="{{ route('agenda.index') }}" class="btn btn-primary">Voltar </a>
-                <a href="{{ route('agenda.edit', $agenda->id) }}" class="btn btn-primary">Editar</a>
-            </div>
-        
-        </div>
-    </div>
-    
+@section('conteudo')
+    <fieldset>
+        <label for="id" >ID: </label>
+        <input type="text" disabled value="{{ $agenda[0]['id'] }}">
+        <br><br>
+        <label for="nome">Nome: </label>
+        <input type="text" disabled value="{{ $agenda[0]['nome'] }}">
+        <br><br>
+        <label for="telefone">Telefone: </label>
+        <input type="tel" disabled value="{{ $agenda[0]['telefone'] }}">
+        <br><br>
+        <label for="email">Email: </label>
+        <input type="email" disabled value="{{ $agenda[0]['email'] }}">
+        <br><br>
+        <a href="{{ route('agenda.index') }}"><button>Voltar</button></a>
+        <a href="{{ route('agenda.edit', $agenda[0]['id']) }}"><button>Editar</button></a>
+    </fieldset>
 @endsection

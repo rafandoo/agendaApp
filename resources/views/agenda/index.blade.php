@@ -1,38 +1,49 @@
-@extends('agenda.nav')
-@section('title', 'Agenda index')
-@section('content')
-<div class="col-md-10 offset-md-1 dashboard-agendas-container">
-    <p>Confira nossos contatos</p>
-    <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">E-mail</th>
-            <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @foreach($agenda as $agenda)
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agenda - Index</title>
+    <script type="text/javascript">
+        function confirmDelete(id) {
+            if (confirm("Deseja realmente excluir?")) {
+                fetch('agenda/' + id, {
+                    method: 'DELETE'
+                }).then(location.reload())
+            }
+        }
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>Agenda</legend>
+        <a href="{{ route('agenda.create') }}"><button>Novo Contato</button></a>
+        <br><br>
+        <table>
+            <thead>
                 <tr>
-                    <th scope="row">{{ $agenda->id }}</th>
-                    <td>{{ $agenda->nome }}</td>
-                    <td>{{ $agenda->telefone }}</td>
-                    <td>{{ $agenda->email }}</td>
-                    <td class="text-end align-middle">
-                        <a href="{{ route('agenda.show', $agenda->id) }}" class="btn btn-primary">Ver</a>
-                        <a href="{{ route('agenda.edit', $agenda->id) }}" class="btn btn-info edit-btn"><ion-icon name="create-outline"></ion-icon>Editar</a>
-                        <form action="{{ route('agenda.destroy', $agenda->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger delete-btn" onclick=" return confirm('Deseja remover esse contato?');"><ion-icon name="trash-outline"></ion-icon>Deletar</button>
-                        </form>
-                    <td>
-                </tr>   
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($agenda as $item)
+                    <tr>
+                        <td>{{ $item['id'] }}</td>
+                        <td>{{ $item['nome'] }}</td>
+                        <td>{{ $item['telefone'] }}</td>
+                        <td>{{ $item['email'] }}</td>
+                        <td>
+                            <a href="{{ route('agenda.show', $item['id']) }}"><button>Ver</button></a>
+                            <a href="{{ route('agenda.edit', $item['id']) }}"><button>Editar</button></a>
+                            <a href="javascript:confirmDelete({{ $item['id'] }})"><button>Excluir</button></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>
