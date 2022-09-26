@@ -50,6 +50,8 @@ class ContatosController extends Controller
         $novo->telefone = $request->input('telefone');
         $novo->save();
         return redirect()->route('contatos.index');
+
+        //$novo = Contatos::create($request->all());
     }
 
     /**
@@ -91,6 +93,8 @@ class ContatosController extends Controller
         $contato->telefone = $request->input('telefone');
         $contato->save();
         return redirect()->route('contatos.index');
+        // $c = Contatos::update($request->all());
+        //Contatos::findOrFail($id)->update($request->all());
     }
 
     /**
@@ -101,8 +105,8 @@ class ContatosController extends Controller
      */
     public function destroy($id)
     {
-        $contato = Contatos::findOrFail($id);
-        $contato->delete();
+        $contato = Contatos::findOrFail($id)->delete();
         return redirect()->route('contatos.index');
+        // Contatos::destroy($id);
     }
 }
